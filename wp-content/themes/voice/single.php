@@ -95,7 +95,7 @@
              $img2 = $img2."&y=".$y[0];
              $md5['y'] = $y[0];
          }
-         $page1 = "http://image-mix-facebook.ilhanet.com/fileCached/";
+         $page1 = "http://mix-testesdivertidos-com.umbler.net/pageCached/";
          $page2 = "/".md5(serialize($md5));
 //         $page2 = "/".md5(serialize(array('file' => $values[0]) ))."?app_id=1065386780209103&site=".esc_url( apply_filters( 'the_permalink', get_permalink( 0 ), 0 ) )."&title=".urlencode(get_bloginfo( 'name', 'display' ));
 
@@ -199,15 +199,6 @@
     }
 
     //Função para o botão compartilhar
-    function facebookShare(prefix){
-        if (prefix==undefined){
-            if (pageResolved!=null)
-                return pageResolved;
-        } else {
-            if (pageResolved!=null)
-                return prefix+pageResolved;
-        }
-    }
     function facebookShare(){
         var url;
         if (urlResolved==null)
@@ -266,14 +257,6 @@
 	    </div>
 	</div>
 
-    <div class="fb-share-button"
-         data-href="javascript: facebookShare2();"
-         data-layout="button_count" data-size="small" data-mobile-iframe="true">
-        <a class="fb-xfbml-parse-ignore" target="_blank"
-           href="javascript: facebookShare2('https://www.facebook.com/sharer/sharer.php?u=');">
-            Compartilhar
-        </a>
-    </div>
 	<div id="shareBtn" class="botao-compartilhar" style="display: none">
 		<a href="javascript: void(0);" data-layout="button_count"
            onclick="facebookShare();">
