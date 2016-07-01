@@ -210,8 +210,10 @@
     }
     function facebookShare(){
         var url;
-        if (urlResolved==null) url = 'https://www.facebook.com/sharer.php?u=<?php the_permalink() ?>&picture=<?php echo $values[0] ?>';
-        else url = 'https://www.facebook.com/sharer.php?u=<?php the_permalink() ?>&picture='+pageResolved;
+        if (urlResolved==null)
+            url = 'https://www.facebook.com/sharer.php?u=<?php the_permalink() ?>&picture=<?php echo $values[0] ?>';
+        else url = 'https://www.facebook.com/sharer.php?u='+pageResolved;
+//        else url = 'https://www.facebook.com/sharer.php?u=<?php //the_permalink() ?>//&picture='+pageResolved;
 //            url = 'https://www.facebook.com/sharer.php?u='+pageResolved+'&picture='+urlResolved;
 
         window.open(url,'ventanacompartir', 'toolbar=0, status=0, width=650, height=450');
