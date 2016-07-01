@@ -97,6 +97,7 @@
          }
          $page1 = "http://mix-testesdivertidos-com.umbler.net/pageCached/";
          $page2 = "/".md5(serialize($md5));
+         $page3 = "?post=".get_the_ID();
 //         $page2 = "/".md5(serialize(array('file' => $values[0]) ))."?app_id=1065386780209103&site=".esc_url( apply_filters( 'the_permalink', get_permalink( 0 ), 0 ) )."&title=".urlencode(get_bloginfo( 'name', 'display' ));
 
 
@@ -190,7 +191,7 @@
             console.log('Successful login for: ' + response.name);
             document.getElementById('loginBtn').innerHTML = '';
             urlResolved = '<?php echo $img1; ?>'+response.id+'&name='+response.name+'<?php echo $img2; ?>';
-            pageResolved = '<?php echo $page1; ?>'+response.id+'<?php echo $page2; ?>'+'/'+response.name.replace(' ','-');
+            pageResolved = '<?php echo $page1; ?>'+response.id+'<?php echo $page2; ?>'+'/'+response.name.replace(' ','-')+'<?php echo $page3; ?>';
 
             console.log(pageResolved);
             document.getElementById('status').innerHTML = '<img src="'+urlResolved+'">';
