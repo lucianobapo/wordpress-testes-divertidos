@@ -60,7 +60,7 @@
          $namey = get_post_custom_values("howto15");
          $namecolor = get_post_custom_values("howto16");
 
-         $img1 = "http://image-mix-facebook.ilhanet.com/file?id=";
+         $img1 = "http://mix.testesdivertidos-com.umbler.net/file?id=";
          $img2 = "&file=".$values[0];
          $md5 = array('file' => $values[0]);
          if (!empty($namesize[0])) {
@@ -199,6 +199,15 @@
     }
 
     //Função para o botão compartilhar
+    function facebookShare(prefix){
+        if (prefix==undefined){
+            if (pageResolved!=null)
+                return pageResolved;
+        } else {
+            if (pageResolved!=null)
+                return prefix+pageResolved;
+        }
+    }
     function facebookShare(){
         var url;
         if (urlResolved==null) url = 'https://www.facebook.com/sharer.php?u=<?php the_permalink() ?>&picture=<?php echo $values[0] ?>';
@@ -255,7 +264,14 @@
 	    </div>
 	</div>
 
-
+    <div class="fb-share-button"
+         data-href="javascript: facebookShare2();"
+         data-layout="button_count" data-size="small" data-mobile-iframe="true">
+        <a class="fb-xfbml-parse-ignore" target="_blank"
+           href="javascript: facebookShare2('https://www.facebook.com/sharer/sharer.php?u=');">
+            Compartilhar
+        </a>
+    </div>
 	<div id="shareBtn" class="botao-compartilhar" style="display: none">
 		<a href="javascript: void(0);" data-layout="button_count"
            onclick="facebookShare();">
