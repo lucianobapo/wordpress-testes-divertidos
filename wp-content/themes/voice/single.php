@@ -97,9 +97,9 @@
          }
          $page1 = "http://mix-testesdivertidos-com.umbler.net/pageCached/";
          $page2 = "/".md5(serialize($md5));
-         $page3 = "?post=".get_the_ID().'&post_name='.the_permalink();
+         $page3 = "?post=".get_the_ID().'&post_name='.get_permalink();
 //         $page2 = "/".md5(serialize(array('file' => $values[0]) ))."?app_id=1065386780209103&site=".esc_url( apply_filters( 'the_permalink', get_permalink( 0 ), 0 ) )."&title=".urlencode(get_bloginfo( 'name', 'display' ));
-
+var_dump($page3);
 
 
          ?>
