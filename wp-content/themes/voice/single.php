@@ -60,7 +60,7 @@
          $namey = get_post_custom_values("howto15");
          $namecolor = get_post_custom_values("howto16");
 
-         $img1 = "http://mix.testesdivertidos-com.umbler.net/file?id=";
+         $img1 = "http://mix-testesdivertidos-com.umbler.net/file?id=";
          $img2 = "&file=".$values[0];
          $md5 = array('file' => $values[0]);
          if (!empty($namesize[0])) {
