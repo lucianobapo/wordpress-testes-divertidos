@@ -60,7 +60,7 @@
          $namey = get_post_custom_values("howto15");
          $namecolor = get_post_custom_values("howto16");
 
-         $img1 = "http://mix-testesdivertidos-com.umbler.net/file?id=";
+         $img1 = "http://mix.testesdivertidos.com/file?id=";
          $img2 = "&file=".$values[0];
          $md5 = array('file' => $values[0]);
          if (!empty($namesize[0])) {
@@ -95,7 +95,7 @@
              $img2 = $img2."&y=".$y[0];
              $md5['y'] = $y[0];
          }
-         $page1 = "http://mix-testesdivertidos-com.umbler.net/pageCached/";
+         $page1 = "http://mix.testesdivertidos.com/pageCached/";
          $page2 = "/".md5(serialize($md5));
          $page3 = "?post=".get_the_ID().'&post_name='.str_replace('/','',$_SERVER['REQUEST_URI']);
          ?>
