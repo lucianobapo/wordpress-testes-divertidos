@@ -97,7 +97,8 @@
          }
          $page1 = "http://mix.testesdivertidos.com/pageCached/";
          $page2 = "/".md5(serialize($md5));
-         $page3 = "?post=".get_the_ID().'&post_name='.str_replace('/','',$_SERVER['REQUEST_URI']);
+         $page3 = "?post=".get_the_ID();
+//         $page3 = "?post=".get_the_ID().'&post_name='.str_replace('/','',$_SERVER['REQUEST_URI']);
          ?>
 
 <script>
