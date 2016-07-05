@@ -104,6 +104,8 @@
 <script>
 
   // Isto é chamado com os resultados a partir de FB.getLoginStatus ().
+  var urlResolved=null;
+  var pageResolved=null;
   function statusChangeCallback(response) {
     console.log('statusChangeCallback');
     console.log(response);
@@ -111,30 +113,43 @@
     // App saber o status de login atual da pessoa.
     // A documentação completa sobre o objeto de resposta pode ser encontrada na documentação
     // Para FB.getLoginStatus ().
-    if (response.status === 'connected') {
-        // Logado em sua aplicação e Facebook.
-        testAPI(response.authResponse.accessToken);
-    } else if (response.status === 'not_authorized') {
-        // A pessoa está logado no Facebook, mas não a sua aplicação.
         document.getElementById('status').innerHTML = '<?php echo '<img src='.$values2[0].'>'; ?>';
         document.getElementById('shareBtn').style.display = "none";
-    } else {
-        // A pessoa não está logado no Facebook, por isso não temos certeza se
-        // Eles são registrados para este aplicativo ou não.
-        document.getElementById('status').innerHTML = '<?php echo '<img src='.$values2[0].'>'; ?>';
-        document.getElementById('shareBtn').style.display = "none";
-    }
+        if (response.status === 'connected') {
+            // Logado em sua aplicação e Facebook.
+        //        testAPI(response.authResponse.accessToken);
+            console.log('Welcome!  Fetching your information.... ');
+            FB.api('/me?fields=birthday,email,name,age_range&access_token=' + response.authResponse.accessToken, function(apiResponse) {
+                console.log('Successful login for: ' + apiResponse.name);
+                document.getElementById('loginBtn').innerHTML = '';
+                urlResolved = '<?php echo $img1; ?>'+apiResponse.id+'&name='+apiResponse.name+'<?php echo $img2; ?>';
+                pageResolved = '<?php echo $page1; ?>'+apiResponse.id+'<?php echo $page2; ?>'+'/'+apiResponse.name.replace(' ','-')+'<?php echo $page3; ?>';
+
+        //            console.log(pageResolved);
+                document.getElementById('status').innerHTML = '<img src="'+urlResolved+'">';
+                document.getElementById('shareBtn').style.display = "initial";
+            });
+        } else if (response.status === 'not_authorized') {
+            // A pessoa está logado no Facebook, mas não a sua aplicação.
+//            document.getElementById('status').innerHTML = '<?php //echo '<img src='.$values2[0].'>'; ?>//';
+//            document.getElementById('shareBtn').style.display = "none";
+        } else {
+            // A pessoa não está logado no Facebook, por isso não temos certeza se
+            // Eles são registrados para este aplicativo ou não.
+//            document.getElementById('status').innerHTML = '<?php //echo '<img src='.$values2[0].'>'; ?>//';
+//            document.getElementById('shareBtn').style.display = "none";
+        }
   }
 
 
   // This function is called when someone finishes with the Login
   // Button.  See the onlogin handler attached to it in the sample
   // code below.
-  function checkLoginState() {
-    FB.getLoginStatus(function(response) {
-      statusChangeCallback(response);
-    });
-  }
+//  function checkLoginState() {
+//    FB.getLoginStatus(function(response) {
+//      statusChangeCallback(response);
+//    });
+//  }
 
   window.fbAsyncInit = function() {
       FB.init({
@@ -158,9 +173,9 @@
       //
       // These three cases are handled in the callback function.
 
-      FB.getLoginStatus(function(response) {
-        statusChangeCallback(response);
-      });
+//      FB.getLoginStatus(function(response) {
+//        statusChangeCallback(response);
+//      });
 
       FB.Event.subscribe('auth.authResponseChange', function(response) {
           statusChangeCallback(response);
@@ -179,22 +194,21 @@
 
     // Here we run a very simple test of the Graph API after login is
     // successful.  See statusChangeCallback() for when this call is made.
-    var urlResolved=null;
-    var pageResolved=null;
 
-  function testAPI(accessToken) {
-        console.log('Welcome!  Fetching your information.... ');
-        FB.api('/me?fields=birthday,email,name,age_range&access_token=' + accessToken, function(response) {
-            console.log('Successful login for: ' + response.name);
-            document.getElementById('loginBtn').innerHTML = '';
-            urlResolved = '<?php echo $img1; ?>'+response.id+'&name='+response.name+'<?php echo $img2; ?>';
-            pageResolved = '<?php echo $page1; ?>'+response.id+'<?php echo $page2; ?>'+'/'+response.name.replace(' ','-')+'<?php echo $page3; ?>';
 
-            console.log(pageResolved);
-            document.getElementById('status').innerHTML = '<img src="'+urlResolved+'">';
-            document.getElementById('shareBtn').style.display = "initial";
-        });
-    }
+//  function testAPI(accessToken) {
+//        console.log('Welcome!  Fetching your information.... ');
+//        FB.api('/me?fields=birthday,email,name,age_range&access_token=' + accessToken, function(apiResponse) {
+//            console.log('Successful login for: ' + apiResponse.name);
+//            document.getElementById('loginBtn').innerHTML = '';
+//            urlResolved = '<?php //echo $img1; ?>//'+apiResponse.id+'&name='+apiResponse.name+'<?php //echo $img2; ?>//';
+//            pageResolved = '<?php //echo $page1; ?>//'+apiResponse.id+'<?php //echo $page2; ?>//'+'/'+apiResponse.name.replace(' ','-')+'<?php //echo $page3; ?>//';
+//
+//            console.log(pageResolved);
+//            document.getElementById('status').innerHTML = '<img src="'+urlResolved+'">';
+//            document.getElementById('shareBtn').style.display = "initial";
+//        });
+//    }
 
     //Função para o botão compartilhar
     function facebookShare(){
@@ -209,17 +223,7 @@
     }
 </script>
 
-<!--<div id="teste"></div>-->
 <div id="fb-root"></div>
-<!--<script>-->
-<!--    (function(d, s, id) {-->
-<!--  var js, fjs = d.getElementsByTagName(s)[0];-->
-<!--  if (d.getElementById(id)) return;-->
-<!--  js = d.createElement(s); js.id = id;-->
-<!--  js.src = "//connect.facebook.net/pt_BR/sdk.js#xfbml=1&version=v2.6&appId=1584544561792934";-->
-<!--  fjs.parentNode.insertBefore(js, fjs);-->
-<!--}(document, 'script', 'facebook-jssdk'));-->
-<!--</script>-->
 
 <style type="text/css">
   #status{ margin: 0px 0 0 0px; }
@@ -238,15 +242,16 @@
 	<div class="fb-like" data-href="https://facebook.com/testesdivertidos" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
 
 	<div class="ads-300-single"> 
-    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-    <!-- TestesDivertidos -->
-    <ins class="adsbygoogle"
-         style="display:inline-block;width:300px;height:250px"
-         data-ad-client="ca-pub-1364233972166119"
-         data-ad-slot="9706095180"></ins>
-    <script>
-    (adsbygoogle = window.adsbygoogle || []).push({});
-    </script>
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- TestesDivertidos -->
+        <ins class="adsbygoogle"
+             style="display:inline-block;width:300px;height:250px"
+             data-ad-client="ca-pub-1364233972166119"
+             data-ad-slot="9706095180">
+        </ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
 	</div>
 
 	<div id="loginBtn">
