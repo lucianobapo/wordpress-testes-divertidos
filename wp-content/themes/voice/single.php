@@ -141,11 +141,13 @@
             // A pessoa está logado no Facebook, mas não a sua aplicação.
 //            document.getElementById('status').innerHTML = '<?php //echo '<img src='.$values2[0].'>'; ?>//';
 //            document.getElementById('shareBtn').style.display = "none";
+            console.log('not_authorized');
         } else {
             // A pessoa não está logado no Facebook, por isso não temos certeza se
             // Eles são registrados para este aplicativo ou não.
 //            document.getElementById('status').innerHTML = '<?php //echo '<img src='.$values2[0].'>'; ?>//';
 //            document.getElementById('shareBtn').style.display = "none";
+            console.log('else');
         }
   }
 
@@ -197,7 +199,7 @@
   .fb-comments{ margin-top: 5px; }
 </style>
 <center>
-	<div id="status"></div>
+	<div id="status"><?php echo '<img src='.$values2[0].'>'; ?></div>
 
 	<div class="fb-like" data-href="https://facebook.com/testesdivertidos" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
 
