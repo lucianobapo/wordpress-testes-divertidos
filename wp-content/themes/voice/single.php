@@ -102,6 +102,14 @@
          ?>
 
 <script>
+    // Load the SDK asynchronously
+    (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/pt_BR/sdk.js#xfbml=1&version=v2.6&appId=1065386780209103";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
 
   // Isto é chamado com os resultados a partir de FB.getLoginStatus ().
   var urlResolved=null;
@@ -145,33 +153,14 @@
   // This function is called when someone finishes with the Login
   // Button.  See the onlogin handler attached to it in the sample
   // code below.
-//  function checkLoginState() {
-//    FB.getLoginStatus(function(response) {
-//      statusChangeCallback(response);
-//    });
-//  }
-
   window.fbAsyncInit = function() {
       FB.init({
         appId      : '1065386780209103',
-          status: false,
-        cookie     : true,  // enable cookies to allow the server to access
-                            // the session
+        status: false,
+        cookie     : true,  // enable cookies to allow the server to access the session
         xfbml      : true,  // parse social plugins on this page
         version    : 'v2.6' // use version 2.2
       });
-
-      // Now that we've initialized the JavaScript SDK, we call
-      // FB.getLoginStatus().  This function gets the state of the
-      // person visiting this page and can return one of three states to
-      // the callback you provide.  They can be:
-      //
-      // 1. Logged into your app ('connected')
-      // 2. Logged into Facebook, but not your app ('not_authorized')
-      // 3. Not logged into Facebook and can't tell if they are logged into
-      //    your app or not.
-      //
-      // These three cases are handled in the callback function.
 
 //      FB.getLoginStatus(function(response) {
 //        statusChangeCallback(response);
@@ -183,42 +172,13 @@
 
   };
 
-    // Load the SDK asynchronously
-    (function(d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) return;
-        js = d.createElement(s); js.id = id;
-        js.src = "//connect.facebook.net/pt_BR/sdk.js#xfbml=1&version=v2.6&appId=1065386780209103";
-        fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
-
-    // Here we run a very simple test of the Graph API after login is
-    // successful.  See statusChangeCallback() for when this call is made.
-
-
-//  function testAPI(accessToken) {
-//        console.log('Welcome!  Fetching your information.... ');
-//        FB.api('/me?fields=birthday,email,name,age_range&access_token=' + accessToken, function(apiResponse) {
-//            console.log('Successful login for: ' + apiResponse.name);
-//            document.getElementById('loginBtn').innerHTML = '';
-//            urlResolved = '<?php //echo $img1; ?>//'+apiResponse.id+'&name='+apiResponse.name+'<?php //echo $img2; ?>//';
-//            pageResolved = '<?php //echo $page1; ?>//'+apiResponse.id+'<?php //echo $page2; ?>//'+'/'+apiResponse.name.replace(' ','-')+'<?php //echo $page3; ?>//';
-//
-//            console.log(pageResolved);
-//            document.getElementById('status').innerHTML = '<img src="'+urlResolved+'">';
-//            document.getElementById('shareBtn').style.display = "initial";
-//        });
-//    }
-
     //Função para o botão compartilhar
     function facebookShare(){
         var url;
         if (urlResolved==null)
             url = 'https://www.facebook.com/sharer.php?u=<?php the_permalink() ?>&picture=<?php echo $values[0] ?>';
-        else url = 'https://www.facebook.com/sharer.php?u='+pageResolved;
-//        else url = 'https://www.facebook.com/sharer.php?u=<?php //the_permalink() ?>//&picture='+pageResolved;
-//            url = 'https://www.facebook.com/sharer.php?u='+pageResolved+'&picture='+urlResolved;
-
+        else
+            url = 'https://www.facebook.com/sharer.php?u='+pageResolved;
         window.open(url,'ventanacompartir', 'toolbar=0, status=0, width=650, height=450');
     }
 </script>
