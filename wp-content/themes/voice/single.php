@@ -112,8 +112,8 @@
     }(document, 'script', 'facebook-jssdk'));
 
   // Isto é chamado com os resultados a partir de FB.getLoginStatus ().
-  var urlResolved=null;
-  var pageResolved=null;
+  var urlResolved;
+  var pageResolved;
   function statusChangeCallback(response) {
     console.log('statusChangeCallback');
     console.log(response);
@@ -152,7 +152,7 @@
   window.fbAsyncInit = function() {
       FB.init({
         appId       : '1065386780209103',
-        status      : true,
+        status      : false,
         cookie      : true,  // enable cookies to allow the server to access the session
         xfbml       : true,  // parse social plugins on this page
         version     : 'v2.6' // use version 2.2
@@ -165,13 +165,15 @@
 
     //Função para o botão teste
     function doTest(){
-        document.getElementById('status').innerHTML = '<img src="'+urlResolved+'">';
-        document.getElementById('shareBtn').style.display = "initial";
+        if (urlResolved!=undefined){
+            document.getElementById('status').innerHTML = '<img src="'+urlResolved+'">';
+            document.getElementById('shareBtn').style.display = "initial";
+        }
     }
     //Função para o botão compartilhar
     function facebookShare(){
         var url;
-        if (urlResolved==null)
+        if (pageResolved==undefined)
             url = 'https://www.facebook.com/sharer.php?u=<?php the_permalink() ?>&picture=<?php echo $values[0] ?>';
         else
             url = 'https://www.facebook.com/sharer.php?u='+pageResolved;
@@ -193,9 +195,10 @@
   .fb-comments{ margin-top: 5px; }
 </style>
 <center>
-	<div id="status"><?php echo '<img src='.$values2[0].'>'; ?></div>
-
-    <button onclick="doTest();">Fazer o Teste</button>
+	<div id="status">
+        <?php echo '<img src='.$values2[0].'>'; ?>
+        <button class="btn" onclick="doTest();">Fazer o Teste</button>
+    </div>
 
 	<div class="fb-like" data-href="https://facebook.com/testesdivertidos"
          data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
