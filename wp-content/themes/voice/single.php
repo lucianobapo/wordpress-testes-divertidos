@@ -121,8 +121,8 @@
     // App saber o status de login atual da pessoa.
     // A documentação completa sobre o objeto de resposta pode ser encontrada na documentação
     // Para FB.getLoginStatus ().
-        document.getElementById('status').innerHTML = '<?php echo '<img src='.$values2[0].'>'; ?>';
-        document.getElementById('shareBtn').style.display = "none";
+//        document.getElementById('status').innerHTML = '<?php //echo '<img src='.$values2[0].'>'; ?>//';
+//        document.getElementById('shareBtn').style.display = "none";
         if (response.status === 'connected') {
             // Logado em sua aplicação e Facebook.
         //        testAPI(response.authResponse.accessToken);
@@ -134,20 +134,14 @@
                 pageResolved = '<?php echo $page1; ?>'+apiResponse.id+'<?php echo $page2; ?>'+'/'+apiResponse.name.replace(' ','-')+'<?php echo $page3; ?>';
 
         //            console.log(pageResolved);
-                document.getElementById('status').innerHTML = '<img src="'+urlResolved+'">';
-                document.getElementById('shareBtn').style.display = "initial";
+//                document.getElementById('status').innerHTML = '<img src="'+urlResolved+'">';
+//                document.getElementById('shareBtn').style.display = "initial";
             });
-        } else if (response.status === 'not_authorized') {
-            // A pessoa está logado no Facebook, mas não a sua aplicação.
-//            document.getElementById('status').innerHTML = '<?php //echo '<img src='.$values2[0].'>'; ?>//';
-//            document.getElementById('shareBtn').style.display = "none";
-            console.log('not_authorized');
         } else {
             // A pessoa não está logado no Facebook, por isso não temos certeza se
             // Eles são registrados para este aplicativo ou não.
-//            document.getElementById('status').innerHTML = '<?php //echo '<img src='.$values2[0].'>'; ?>//';
-//            document.getElementById('shareBtn').style.display = "none";
-            console.log('else');
+            document.getElementById('status').innerHTML = '<?php echo '<img src='.$values2[0].'>'; ?>';
+            document.getElementById('shareBtn').style.display = "none";
         }
   }
 
@@ -157,23 +151,23 @@
   // code below.
   window.fbAsyncInit = function() {
       FB.init({
-        appId      : '1065386780209103',
-        status: false,
-        cookie     : true,  // enable cookies to allow the server to access the session
-        xfbml      : true,  // parse social plugins on this page
-        version    : 'v2.6' // use version 2.2
+        appId       : '1065386780209103',
+        status      : true,
+        cookie      : true,  // enable cookies to allow the server to access the session
+        xfbml       : true,  // parse social plugins on this page
+        version     : 'v2.6' // use version 2.2
       });
-
-//      FB.getLoginStatus(function(response) {
-//        statusChangeCallback(response);
-//      });
 
       FB.Event.subscribe('auth.authResponseChange', function(response) {
           statusChangeCallback(response);
       });
-
   };
 
+    //Função para o botão teste
+    function doTest(){
+        document.getElementById('status').innerHTML = '<img src="'+urlResolved+'">';
+        document.getElementById('shareBtn').style.display = "initial";
+    }
     //Função para o botão compartilhar
     function facebookShare(){
         var url;
@@ -201,7 +195,10 @@
 <center>
 	<div id="status"><?php echo '<img src='.$values2[0].'>'; ?></div>
 
-	<div class="fb-like" data-href="https://facebook.com/testesdivertidos" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
+    <button onclick="doTest();">Fazer o Teste</button>
+
+	<div class="fb-like" data-href="https://facebook.com/testesdivertidos"
+         data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
 
 	<div class="ads-300-single"> 
         <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
@@ -218,7 +215,7 @@
 
 	<div id="loginBtn">
 	    <div class="fb-login-button" data-max-rows="1" data-size="xlarge"
-	         data-show-faces="false" data-auto-logout-link="true">Entre com Facebook
+	         data-show-faces="false" data-auto-logout-link="false">Entre com Facebook
 	    </div>
 	</div>
 
