@@ -1,4 +1,3 @@
-<link href="http://sistemaalicerce.com.br/arquivos-layout-padrao/css/font-awesome.min.css" rel="stylesheet">
 <?php get_header(); ?>
 
   <style type="text/css">
