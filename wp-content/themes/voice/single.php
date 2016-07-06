@@ -196,7 +196,7 @@
 <center>
 	<div id="status">
         <?php echo '<img src='.$values2[0].'>'; ?>
-        <button class="btn btn-default" onclick="doTest();">Fazer o Teste</button>
+        <button style="color: white;" onclick="doTest();">Fazer o Teste</button>
     </div>
 
 	<div class="fb-like" data-href="https://facebook.com/testesdivertidos"
