@@ -135,12 +135,14 @@
         //            console.log(pageResolved);
 //                document.getElementById('status').innerHTML = '<img src="'+urlResolved+'">';
 //                document.getElementById('shareBtn').style.display = "initial";
+                document.getElementById('testeBtn').style.display = "initial";
             });
         } else {
             // A pessoa não está logado no Facebook, por isso não temos certeza se
             // Eles são registrados para este aplicativo ou não.
             document.getElementById('status').innerHTML = '<?php echo '<img src='.$values2[0].'>'; ?>';
             document.getElementById('shareBtn').style.display = "none";
+            document.getElementById('testeBtn').style.display = "none";
         }
   }
 
@@ -196,7 +198,7 @@
 <center>
 	<div id="status">
         <?php echo '<img src='.$values2[0].'>'; ?>
-        <button style="color: white;" onclick="doTest();">Fazer o Teste</button>
+        <button id="testeBtn" style="color: white;display: none;" onclick="doTest();">Fazer o Teste</button>
     </div>
 
 	<div class="fb-like" data-href="https://facebook.com/testesdivertidos"
