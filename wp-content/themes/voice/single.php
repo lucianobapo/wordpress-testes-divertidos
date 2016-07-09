@@ -94,8 +94,11 @@
              $img2 = $img2."&y=".$y[0];
              $md5['y'] = $y[0];
          }
+         $key = md5(serialize($md5));
+         $imageAws1 = "https://s3-sa-east-1.amazonaws.com/testes-divertidos/img-mixed/".str_replace(['.',':','/'],'',substr($md5['file'],0,-4));
+         $imageAws2 = substr($md5['file'],-4);
          $page1 = "http://mix.testesdivertidos.com/pageCached/";
-         $page2 = "/".md5(serialize($md5));
+         $page2 = "/".$key;
          $page3 = "?post=".get_the_ID();
 //         $page3 = "?post=".get_the_ID().'&post_name='.str_replace('/','',$_SERVER['REQUEST_URI']);
          ?>
@@ -111,11 +114,15 @@
     }(document, 'script', 'facebook-jssdk'));
 
   // Isto é chamado com os resultados a partir de FB.getLoginStatus ().
+  var imageResolved;
   var urlResolved;
   var pageResolved;
+    console.log('Key:');
+    console.log('<?php echo $key; ?>');
   function statusChangeCallback(response) {
     console.log('statusChangeCallback');
     console.log(response);
+
     // O objeto de resposta é retornado com um campo de status que permite que o
     // App saber o status de login atual da pessoa.
     // A documentação completa sobre o objeto de resposta pode ser encontrada na documentação
@@ -129,6 +136,7 @@
             FB.api('/me?fields=birthday,email,name,age_range&access_token=' + response.authResponse.accessToken, function(apiResponse) {
                 console.log('Successful login for: ' + apiResponse.name);
                 document.getElementById('loginBtn').innerHTML = '';
+                imageResolved = '<?php echo $imageAws1; ?>'+apiResponse.id+'<?php echo $imageAws2; ?>';
                 urlResolved = '<?php echo $img1; ?>'+apiResponse.id+'&name='+apiResponse.name+'<?php echo $img2; ?>';
                 pageResolved = '<?php echo $page1; ?>'+apiResponse.id+'<?php echo $page2; ?>'+'/'+apiResponse.name.replace(' ','-')+'<?php echo $page3; ?>';
 
@@ -167,18 +175,32 @@
     //Função para o botão teste
     function doTest(){
         if (urlResolved!=undefined){
+//            document.getElementById('frame').src = urlResolved;
             document.getElementById('status').innerHTML = '<img src="'+urlResolved+'">';
             document.getElementById('shareBtn').style.display = "initial";
         }
     }
     //Função para o botão compartilhar
     function facebookShare(){
-        var url;
-        if (pageResolved==undefined)
-            url = 'https://www.facebook.com/sharer.php?u=<?php the_permalink() ?>&picture=<?php echo $values[0] ?>';
-        else
-            url = 'https://www.facebook.com/sharer.php?u='+pageResolved;
-        window.open(url,'ventanacompartir', 'toolbar=0, status=0, width=650, height=450');
+        FB.ui({
+            method: 'share',
+            href: pageResolved,
+            picture: imageResolved,
+        }, function(response){});
+
+//        FB.ui({
+//            method: 'feed',
+//            link: pageResolved,
+//            picture: imageResolved,
+//            caption: 'An example caption',
+//        }, function(response){});
+
+//        var url;
+//        if (pageResolved==undefined)
+//            url = 'https://www.facebook.com/sharer.php?u=<?php //the_permalink() ?>//&picture=<?php //echo $values[0] ?>//';
+//        else
+//            url = 'https://www.facebook.com/sharer.php?u='+pageResolved+'&picture='+imageResolved;
+//        window.open(url,'ventanacompartir', 'toolbar=0, status=0, width=650, height=450');
     }
 </script>
 
@@ -187,34 +209,37 @@
 <style type="text/css">
   #status{ margin: 0px 0 0 0px; }
   .fb-login-button{ margin: auto; text-align: center; margin: 0 0 20px 0;}
-  .fb-like{ margin-bottom: 8px; padding: 8px; }
-  .ads-300-single{ margin: 0px 0 20px 0; }
+  .fb-like{ margin-bottom: 0px; padding: 8px; }
+  .ads-300-single{ margin: 0px 0 4px 0; }
   .ads-300-single p{ margin: 2px 0 5px 0; }
   .botao-compartilhar{ margin: 0 0 0px 0;}
   .atualizar-pagina input{background: #fff; border:1px solid #ccc; box-shadow: 1px 2px 5px #888888; color: #333;}
   .viewss{font-size: 10px; padding-left: 9px; color: #F0F0F0;}
   .fb-comments{ margin-top: 5px; }
+  #testeBtn{ width: 98%; height: 45px; margin: 10px 5px 0px 5px; font-size: 18px; color: white; display: none; background: #5CB85C; border-color:1px solid #4CAE4C; }
+  #testeBtn:hover{color: white; background: #449D44; border-color:1px solid #398439;}
 </style>
 <center>
+<!--    <iframe id="frame" name="frame" width="800" height="420" src="--><?php //echo $values2[0]; ?><!--"></iframe>-->
+
 	<div id="status">
         <?php echo '<img src='.$values2[0].'>'; ?>
-        <button id="testeBtn" style="color: white;display: none;" onclick="doTest();">Fazer o Teste</button>
+        <button id="testeBtn" onclick="doTest();"><i class="fa fa-question-circle" aria-hidden="true"></i> Faça o Teste</button>
     </div>
 
 	<div class="fb-like" data-href="https://facebook.com/testesdivertidos"
          data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
 
 	<div class="ads-300-single"> 
-        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-        <!-- TestesDivertidos -->
-        <ins class="adsbygoogle"
-             style="display:inline-block;width:300px;height:250px"
-             data-ad-client="ca-pub-1364233972166119"
-             data-ad-slot="9706095180">
-        </ins>
-        <script>
-            (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
+      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+      <!-- TD-single-336 -->
+      <ins class="adsbygoogle"
+           style="display:inline-block;width:336px;height:280px"
+           data-ad-client="ca-pub-1364233972166119"
+           data-ad-slot="3943495986"></ins>
+      <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
 	</div>
 
 	<div id="loginBtn">
